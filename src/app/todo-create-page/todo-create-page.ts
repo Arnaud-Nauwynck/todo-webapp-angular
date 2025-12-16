@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {TodoDTO, TodoService} from '../todo.service';
 import {JsonPipe} from '@angular/common';
+import {timer} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-todo-create-page',
@@ -20,7 +22,9 @@ export class TodoCreatePage {
 
   protected createdDTO: TodoDTO|undefined;
 
-  constructor(protected todoService: TodoService) {}
+  constructor(
+    protected router: Router,
+    protected todoService: TodoService) {}
 
   protected createTodo() {
     console.log("... Creating TODO (call server) with description:", this.description);
@@ -33,6 +37,11 @@ export class TodoCreatePage {
         this.description = ''; // Clear the input field after successful creation
         this.inprogress = false;
         this.displayMessage = "Done called server successfully";
+
+        timer(5000).subscribe(() => {
+          console.log("changing to list page");
+          this.router.navigate(['todo', `${response.id}`]);
+        })
       },
       error: (error) => {
         console.error("... Error creating TODO:", error);
