@@ -1,1 +1,20 @@
-<p>todo-create-page works!</p>
+<H1>Create a New TodoService</H1>
+
+<div class="container">
+  <div class="row">
+    <label class="col-3" for="Description">Description: </label>
+    <input class="col-9" type="text" id="Description" [(ngModel)]="description"/>
+  </div>
+  <div class="row">
+    <button class="btn btn-outline-info"
+            [disabled]="inprogress"
+            (click)="createTodo()">Create TodoService</button>
+  </div>
+  @if(displayMessage) {
+    <div class="row">
+      <div class="alert alert-info">
+        {{ displayMessage }}
+      </div>
+    </div>
+  }
+</div>
