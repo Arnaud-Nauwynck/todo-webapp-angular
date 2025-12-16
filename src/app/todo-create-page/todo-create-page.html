@@ -17,4 +17,13 @@
       </div>
     </div>
   }
+  @if(createdDTO) {
+    <div class="row">
+      <label class="col-2">Created: </label>
+      <div class="col-10">
+        {{ createdDTO | json }}
+      </div>
+    </div>
+
+  }
 </div>

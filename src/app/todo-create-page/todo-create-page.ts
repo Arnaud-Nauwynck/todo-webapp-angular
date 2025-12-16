@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {TodoService} from '../todo.service';
+import {TodoDTO, TodoService} from '../todo.service';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'app-todo-create-page',
   imports: [
-    FormsModule
+    FormsModule,
+    JsonPipe
   ],
   templateUrl: './todo-create-page.html',
 })
@@ -16,6 +18,8 @@ export class TodoCreatePage {
 
   protected displayMessage: string|undefined;
 
+  protected createdDTO: TodoDTO|undefined;
+
   constructor(protected todoService: TodoService) {}
 
   protected createTodo() {
@@ -24,6 +28,7 @@ export class TodoCreatePage {
     this.displayMessage = "call in progress...";
     this.todoService.callHttpCreateTodo(this.description).subscribe({
       next: (response) => {
+        this.createdDTO = response;
         console.log("... TODO created successfully:", response);
         this.description = ''; // Clear the input field after successful creation
         this.inprogress = false;
